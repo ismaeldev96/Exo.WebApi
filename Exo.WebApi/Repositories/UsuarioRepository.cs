@@ -43,9 +43,14 @@ namespace Exo.WebApi.Repositories
             return _context.Usuarios.First(u => u.Email == email && u.Senha == senha);
         }
 
+        public Usuario GetByEmail(string email)
+        {
+            return _context.Usuarios.First(u =>u.Email == email);
+        }
         public void Update(int id, Usuario usuario)
         {
             Usuario usuarioEncontrado = _context.Usuarios.Find(id);
+   
             if(usuarioEncontrado != null)
             {
                 usuarioEncontrado.Email = usuario.Email;

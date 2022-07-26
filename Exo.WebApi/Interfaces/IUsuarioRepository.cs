@@ -10,5 +10,6 @@ namespace Exo.WebApi.Interfaces
         void Update(int id, Usuario usuario);
         void Delete(int id);
         Usuario Login(string email, string senha);
+        Usuario GetByEmail (string email);
     }
 }
