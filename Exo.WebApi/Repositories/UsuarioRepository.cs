@@ -14,6 +14,7 @@ namespace Exo.WebApi.Repositories
 
         public void Create(Usuario usuario)
         {
+
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
         }
@@ -45,8 +46,9 @@ namespace Exo.WebApi.Repositories
 
         public Usuario GetByEmail(string email)
         {
-            return _context.Usuarios.First(u =>u.Email == email);
+            return _context.Usuarios.FirstOrDefault(u => u.Email == email);
         }
+
         public void Update(int id, Usuario usuario)
         {
             Usuario usuarioEncontrado = _context.Usuarios.Find(id);

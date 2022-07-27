@@ -49,19 +49,19 @@ namespace Exo.WebApi.Controllers
         [HttpPost]
         public IActionResult Create(Usuario usuario)
         {
+            
             try
             {
-               
-                Usuario usuarioEmail = _iUsuarioRepository.GetByEmail(usuario.Email);
-                
-                if(usuarioEmail != null)
+                Usuario usuarioBuscado = _iUsuarioRepository.GetByEmail(usuario.Email);
+                if (usuarioBuscado != null)
                 {
-                    return StatusCode(406, new { msg = "Email já cadastrado!"});
+                    return StatusCode(406, new { msg = $"Email {usuario.Email} já cadastrado!" });
                 }
-
+                
+                
                 _iUsuarioRepository.Create(usuario);
+                return StatusCode(201, new { msg = $"Usuario Cadastrado com sucesso!" });
 
-                return StatusCode(201);
             }
             catch (Exception e)
             {
@@ -75,9 +75,14 @@ namespace Exo.WebApi.Controllers
             try
             {
                 Usuario usuarioEncontrado = _iUsuarioRepository.GetById(id);
-                if(usuarioEncontrado == null)
+                Usuario usuarioBuscado = _iUsuarioRepository.GetByEmail(usuario.Email);
+                if (usuarioEncontrado == null)
                 {
                     return NotFound();
+                }
+                else if (usuarioBuscado != null)
+                {
+                    return StatusCode(406, new { msg = $"Email {usuario.Email} já cadastrado!" });
                 }
                 _iUsuarioRepository.Update(id, usuario);
                 return StatusCode(201, new { msg = "Usuario Atualizado com Sucesso!" });
@@ -87,5 +92,19 @@ namespace Exo.WebApi.Controllers
                 throw new Exception(e.Message);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            Usuario usuarioBuscado = _iUsuarioRepository.GetById(id);
+            if(usuarioBuscado == null)
+            {
+                return NotFound();
+            }
+            _iUsuarioRepository.Delete(id);
+            return StatusCode(204, new { msg = "Usuario Deletado Com Sucesso" });
+        }
+
+
     }
 }
