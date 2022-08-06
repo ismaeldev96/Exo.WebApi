@@ -45,7 +45,7 @@ namespace Exo.WebApi.Repositories
                 projetoEncontrado.Tecnologia = projeto.Tecnologia;
                 projetoEncontrado.Area = projeto.Area;
             }
-            _context.Projetos.Add(projeto);
+            _context.Projetos.Add(projetoEncontrado);
             _context.SaveChanges();
         }
     }
